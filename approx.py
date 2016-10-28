@@ -6,9 +6,9 @@ import matplotlib.pyplot as plt
 plt.style.use('fivethirtyeight')
 
 
-n_example = 1000
+n_example = 100
 n_batch   = 50
-n_epoch   = 300
+n_epoch   = 1000
 
 np.random.seed(123) 
 fx = lambda x: x + 0.1*np.random.randn(*x.shape)
@@ -29,16 +29,17 @@ def get_data(fx, n, x_range=[-5,5]):
 
 
 def approximator(x):
-        # takes an x value and returns a y
-        l0 = tf.nn.softplus(net.feed_forward(x, x.get_shape()[1], 'approx', 'gen0'))
-        l1 = net.feed_forward(l0, l0.get_shape()[1], 'approx', 'gen1')
- 
+        
+        l0 = tf.nn.softplus(net.feed_forward(x, 10, 'approx', 'l0'))
+        l1 = net.feed_forward(l0, 1, 'approx', 'l1')
+                
         return l1
+
 
 train, test = get_data(fx, n_example)
 
-X = tf.placeholder(tf.float32, [None, 1], name="X")
-Y = tf.placeholder(tf.float32, [None, 1], name="Y")
+X = tf.placeholder(tf.float32, [1, 1], name="X")
+Y = tf.placeholder(tf.float32, [1, 1], name="Y")
 
 y_c = approximator(X)
 
@@ -46,10 +47,12 @@ cost = tf.nn.l2_loss(y_c - Y)
 train_op = tf.train.GradientDescentOptimizer(0.05).minimize(cost)
 
 guesses = []
+a = tf.Variable([[1.]]) 
 with tf.Session() as sess:
         
         sess.run(tf.initialize_all_variables())
-
+        res = net.feed_forward(net.feed_forward(a, 10, 'test', 't'), 1, 'test', 't1')
+'''
         for i in range(n_epoch):
 
                 x_b = np.random.choice(train[0].ravel(), size=n_batch)
@@ -59,6 +62,7 @@ with tf.Session() as sess:
                         
                         sess.run(train_op, feed_dict={X: np.array([[x]]), 
                                                       Y: np.array([[y]])})
+
                 if i%100 == 0 :
                         mse = 0.
                         for x, y in zip(test[0].ravel(), test[1].ravel()):
@@ -73,3 +77,4 @@ with tf.Session() as sess:
 plt.plot(train[0], train[1], 'o') 
 plt.plot(test[0], guesses, 'o')
 plt.show()
+'''
