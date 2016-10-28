@@ -30,8 +30,8 @@ def get_data(fx, n, x_range=[-5,5]):
 
 def approximator(x):
         # takes an x value and returns a y
-        l0 = tf.nn.softplus(net.feed_forward(x, x.get_shape()[1], 'gen0'))
-        l1 = net.feed_forward(l0, l0.get_shape()[1], 'gen1')
+        l0 = tf.nn.softplus(net.feed_forward(x, x.get_shape()[1], 'approx', 'gen0'))
+        l1 = net.feed_forward(l0, l0.get_shape()[1], 'approx', 'gen1')
  
         return l1
 
