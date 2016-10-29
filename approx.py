@@ -85,8 +85,9 @@ with tf.Session() as sess:
                         mse = 0.
                         for x, y in zip(test[0].ravel(), test[1].ravel()):
 
-                                v = sess.run(y_c, feed_dict={X:np.array([[x]])})
-                                mse += (v - y)**2
+                                mse += sess.run(cost, feed_dict={X:np.array([[x]]),
+                                                                 Y:np.array([[y]])})
+                        
 
                         print("Epoch %i, MSE %g" %(i, mse))
         
