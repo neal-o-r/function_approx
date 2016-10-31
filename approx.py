@@ -8,12 +8,12 @@ plt.style.use('fivethirtyeight')
 
 n_example = 1000
 n_batch   = 50
-n_epoch   = 300
+n_epoch   = 1000
 f_range   = (-5,5) 
 
 np.random.seed(123) 
-fx_true = lambda x: x**2 + x - 10
-fx = lambda x: fx_true(x) + 0.1*np.random.randn(*x.shape)
+fx_true = lambda x: x**3 - 0.5*x**2 + x - 10
+fx = lambda x: fx_true(x) + np.random.randn(*x.shape)
 
 def make_plot(train, guess):
 
@@ -61,7 +61,7 @@ Y = tf.placeholder(tf.float32, [1, 1], name="Y")
 y_c = approximator(X)
 
 cost = tf.nn.l2_loss(y_c - Y)
-train_op = tf.train.GradientDescentOptimizer(0.005).minimize(cost)
+train_op = tf.train.AdamOptimizer().minimize(cost)
 
 guesses = []
 with tf.Session() as sess:

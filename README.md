@@ -4,4 +4,4 @@ There's a [theorem](https://en.wikipedia.org/wiki/Universal_approximation_theore
 
 ![Quadratic](https://github.com/neal-o-r/function_approx/blob/master/quadratic.png)
 ![Sine](https://github.com/neal-o-r/function_approx/blob/master/sin.png)
-![A compound trig funciton](https://github.com/neal-o-r/function_approx/blob/master/trig_func.png)
+![Cubic](https://github.com/neal-o-r/function_approx/blob/master/cubic.png)
