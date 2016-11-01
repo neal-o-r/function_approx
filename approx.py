@@ -12,8 +12,8 @@ n_epoch   = 1000
 f_range   = (-5,5) 
 
 np.random.seed(123) 
-fx_true = lambda x: x**3 - 0.5*x**2 + x - 10
-fx = lambda x: fx_true(x) + np.random.randn(*x.shape)
+fx_true = lambda x: x**3 - 2*x**2 + 5*x -10
+fx = lambda x: fx_true(x) + 0.1*np.random.randn(*x.shape)
 
 def make_plot(train, guess):
 
@@ -25,6 +25,7 @@ def make_plot(train, guess):
         plt.legend(loc='best')
         plt.xlim(1.2*f_range[0], 1.2*f_range[1])
         plt.ylim(1.2*min(train[1])[0], 1.2*max(train[1])[0])
+        plt.title(r'$ x^3 - 2x^2 + 5x -10$')
 
         plt.show()
 
@@ -49,7 +50,7 @@ def approximator(x):
         
         l0 = tf.nn.softplus(net.feed_forward(x, 20, 'approx', 'l0'))
         l1 = net.feed_forward(l0, 1, 'approx', 'l1')
-            
+        
         return l1
 
 
